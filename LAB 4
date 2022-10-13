@@ -1,0 +1,90 @@
+#PROGRAM #1
+class Node:
+    #stste=state
+    def _init_(self, state, parent, actions, totalCost):
+        self.state = state
+        self.parent = parent
+        self.actions = actions
+        self.totalCost = totalCost
+node1 = Node(1,2,3,4)
+graph = {'A': Node('A',None,['B','C','E'],None),
+                 'B': Node('B',None,['A','D','E'],None),
+                 'C': Node('C',None,['A','F','G'],None),
+                 'D': Node('D',None,['B','E'],None),
+                 'E': Node('E',None,['A','B','D'],None),
+                 'F': Node('F',None,['C',],None),
+                 'G': Node('G',None,['C',],None),}
+def actionSequence(graph, initialState, goalState):
+        solution= [goalState]
+        currentParent= graph[goalState].parent
+      
+        
+        while currentParent != None:
+            solution.append(currentParent)
+            currentParent = graph[currentParent].parent
+            solution.reverse()
+            
+      
+            
+def DFS():
+
+        initialState = 'Arad'
+        goalState = 'Bucharast'
+        graph = {
+                'Oradea': Node('Oradea', None, ['Sibiu','Zerind'], [151,71]),
+                'Zerind': Node('Zerind', None, ['Oradea','Arad'], [71,75]),
+                'Arad': Node('Arad', None, ['Zerind','Sibiu','Timisoara'], [75,140,118]),
+                'Timisoara': Node('Timisoara', None, ['Lugoj','Arad'], [111,118]),
+                'Zerind': Node('Zerind', None, ['Oradea','Arad'], [71,75]),
+       
+                'Sibiu': Node('Sibiu', None, ['Arad','Rimnicu Vilcea','Oradea','Fagaras'], [140,80,151,99]),
+                'Lugoj': Node('Lugoj', None, ['Mehadia','Timisoara'], [70,111]),
+                'Mehadia': Node('Mehadia', None, ['Drobeata','Lugoj'], [75,70]),
+                'Drobeata': Node('Drobeata', None, ['Craiova','Mehadia'], [120,75]),
+                'Craiova': Node('Craiova', None, ['Pitesti','Rimnicu Vilcea','Drobeata',], [138,146,120]),  
+                'Rimnicu Vilcea': Node('Rimnicu Vilcea', None, ['Sibiu','Pitesti','Craiova'], [80,97,146]),
+                'Pitesti': Node('Pitesti', None, [  'Rimnicu Vilcea','Craiova','Bucharast'], [97,138,101]),
+                'Fagaras': Node('Fagaras', None, ['Sibiu','Bucharast'], [99,211]),
+                'Bucharast':Node('Bucharast',None,['Giurgiu','Pitesti','Fagaras','Urziceni'],[90,101,211,85]),    
+                'Urziceni': Node('Urziceni',None,['Bucharast','Hirsova','Vaslui'],[85,98,142]),
+                'Vaslui': Node('Vaslui',None,['Iasi','Urziceni'],[92,142]),
+                'Iasi': Node('Iasi',None,['Neamt','Vaslui'],[87,92]),
+                'Hirsova': Node('Hirsova',None,['Urziceni','Eforie'],[98,86]),
+                'Neamt': Node('Neamt',None,['Iasi'],[87])}
+                
+        frontier = [initialState]
+        explored = []
+        while len(frontier) !=0:
+
+          currentNode = frontier.pop(len(frontier)-1)
+          print(currentNode)
+          explored.append(currentNode)
+          for child in graph[currentNode].actions:
+              if child not in frontier and child not in explored:
+                  graph[child].parent=currentNode
+                  if graph[child].state==goalState:
+                        return actionSequence(graph, initialState, goalState)
+                  frontier.append(child)
+                  
+
+
+
+
+
+
+
+
+
+
+
+def actionSequence(graph, initialState, goalState):
+                   solution=[goalState]
+                   currentParent = graph[goalState].parent
+                   while currentParent!=None:
+                       solution.append(currentParent)
+                       currentParent = graph[currentParent].parent
+                   solution.reverse()
+                   return solution
+                   
+solution = DFS()
+print(solution)
